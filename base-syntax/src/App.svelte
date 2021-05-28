@@ -1,30 +1,41 @@
 <script>
-	export let name;
+	let name = 'Donghee'
+	let age = 33;
+
+	// 따로 선언 안해줘도 됨
+	$: uppercaseName = name.toUpperCase();
+
+	$: console.log(name);
+
+	$: if (name === 'DongDonghee') {
+		console.log('It runs!')
+		age = 34;
+	}
+
+	function incrementAge() {
+		age += 1;
+	}
+
+	function changeName() {
+		name = 'DongDonghee';
+	}
+
+	function nameInput(event) {
+		const enteredValue = event.target.value;
+		name = enteredValue;
+	}
 </script>
 
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
-
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
 	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
+		color: purple;
 	}
 </style>
+
+<h1>Hello {uppercaseName}, my age is {age}!</h1>
+<button on:click={incrementAge}>Change Age</button>
+<button on:click={changeName}>Change Name</button>
+<!-- 단방향 -->
+<input type="text" value={name} on:input={nameInput}>
+<!-- 양방향 -->
+<input type="text" bind:value={name}>
